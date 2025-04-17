@@ -25,6 +25,10 @@
         <keep-alive>
           <component :is="signupStore.currentStep" />
         </keep-alive>
+
+        <div class="flex text-sm text-indigo-900">
+            <Router-link to="/login" class="font-bold hover:underline">Signin ?</Router-link>
+        </div>
         
         <div class="flex gap-2 mb-2">
             <hr class="h-[1px] bg-black w-[47%] mt-3">

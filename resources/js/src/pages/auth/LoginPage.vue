@@ -23,6 +23,11 @@
         <keep-alive>
           <component :is="loginStore.currentStep" />
         </keep-alive>
+
+        <div class="flex text-sm text-indigo-900">
+            <span class="me-2 font-semibold">You have an account ?</span>
+            <Router-link to="/signup" class="hover:underline font-bold">Signup</Router-link>
+        </div>
         
         <div class="flex gap-2 mb-2">
             <hr class="h-[1px] bg-black w-[47%] mt-3">

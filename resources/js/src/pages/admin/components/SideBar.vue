@@ -1,13 +1,14 @@
 <script setup>
     import { App } from '../../../api/api';
-    import ChevronLeftIcon from '../../../components/icons/ChevronLeftIcon.vue'
-    import ChevronRightIcon from '../../../components/icons/ChevronRightIcon.vue'
-    import HomeIcone from '../../../components/icons/HomeIcon.vue'
-    import PaymentIcon from '../../../components/icons/PaymentIcon.vue'
-    import LogoutIcon from '../../../components/icons/LogoutIcon.vue'
     import { ref } from 'vue';
 
     const toggleSideBar = ref(false);
+    const topNavBarMenu = ref(false);
+
+    function toggleNavBarMenu() {
+        topNavBarMenu.value =!topNavBarMenu.value;
+    }
+
     function toggle() {
         toggleSideBar.value = !toggleSideBar.value;
     }
@@ -29,13 +30,19 @@
                 </div>
                 <ul class="flex flex-col gap-2 p-2">
                     <li class="flex gap-2 bg-slate-200 p-2 rounded-md cursor-pointer">
-                        <HomeIcone class="mt-1"/>
+                        <HomeIcon class="mt-1"/>
                         <span v-show="toggleSideBar">Home</span>
                     </li>
                     <li class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
                         <PaymentIcon class="mt-1"/>
                         <span v-show="toggleSideBar" >Payments</span>
                     </li>
+
+                    <li class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
+                        <UsersIcon class="mt-1"/>
+                        <span v-show="toggleSideBar" >Users</span>
+                    </li>
+
                     <hr>
                     <li class="flex gap-2 text-red-600 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
                         <LogoutIcon class="mt-1"/>
@@ -44,4 +51,33 @@
                 </ul>
             </nav>
     </div>
+
+    <!-- main section -->
+    <div class="bg-slate-200 w-full">
+        <div class="flex justify-between">
+            <div></div>
+            <div class="p-3">
+                <img @click="toggleNavBarMenu" :src="App.baseUrl+'img/avatar.jpeg'" alt="logo" class="rounded-full w-10 cursor-pointer border-2 hover:border-white">
+                <ul v-show="topNavBarMenu" class="bg-white absolute right-4 p-3 rounded-md shadow-lg divide-y divide-gray-200 w-[300px]">
+                    <li class="p-2">
+                        Mahmood subhi
+                        <br>
+                        <small><a class="text-indigo-700" href="">mahmood_alfoqahaa@yahoo.com</a></small>
+                    </li>
+                    
+                    <li class="p-2 hover:bg-gray-100 rounded-md cursor-pointer text-red-600 font-semibold">
+                        Logout
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flex p-10">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+    </div>
+    <!-- main section -->
+
 </template>

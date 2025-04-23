@@ -9,35 +9,46 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    const IS_VALID_EMAIL = 1;
+    const IS_INVALID_EMAIL = 0;
+    const ADMIN_ROLE = 'ADMIN';
+    const DRIVER_ROLE = 'DRIVER';
+    const CUSTOMER_ROLE = 'CUSTOMER';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
+     * 
      */
     protected $fillable = [
         'name',
         'email',
+        'otp_code',
         'password',
+        'is_valid_Email',
+
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+    public static function generateOTP($length = 6)
+    {
+        if($length <= 0 ) return '';
+
+        $otp = '';
+        for($i = 0; $i < $length; $i++){
+            $otp .= mt_rand(0, 9);
+        }
+
+        return $otp;
+    }
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [

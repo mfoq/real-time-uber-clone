@@ -6,10 +6,45 @@ use App\Events\SendEmailEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    public function login(Request $request)
+    {
+        $fields = $request->all();
+        $errors = Validator::make($fields, [
+            'email' => 'required|email',
+            'password' =>'required'
+        ]);
+
+        #json response
+        if($errors->fails()){
+            return response([
+                'errors' => $errors->errors()->all(),
+            ], 422);
+        }
+
+        $user = User::getUserByEmail($fields['email']);
+
+        if(!$user || !Hash::check($fields['password'], $user->password))
+        {
+            return response([
+                'message' => 'Email Or password is incorrect',
+                'isLogged' => false,
+            ], 401);
+        }
+
+        $token = $user->createToken(env('SECRET_TOKEN_KEY'));
+
+        return response([
+            'user' => $user,
+            'token' => $token->plainTextToken,
+        ], 200);
+    }
+
     public function register(Request $request)
     {
         $fields = $request->all();
@@ -48,7 +83,7 @@ class AuthController extends Controller
     {
         $email = $request->email;
         $otpCode = $request->otp_code;
-        $user = User::where('email', $email)->first();
+        $user = User::getUserByEmail($email);
 
         if(!$user){
             return response([

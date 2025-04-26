@@ -1,5 +1,7 @@
 import { defineStore,acceptHMRUpdate } from "pinia";
 import { ref } from "vue";
+import { useVuelidate } from '@vuelidate/core'
+import { required, email } from '@vuelidate/validators'
 
 export const useSignUpStore = defineStore("signup-store", () => {
 
@@ -8,7 +10,17 @@ export const useSignUpStore = defineStore("signup-store", () => {
     const step2 = ref("step2");
     const step3 = ref("step3");
 
-    function moveStep1(){
+    const step1Input = ref({name: "", email: ""});
+    const rulesStep1Input = {
+         name: {required},
+         email: {required, email}
+    };
+
+    const v$ = useVuelidate(rulesStep1Input, step1Input)
+
+    async function moveStep1(){
+        const valid = await v$.value.$validate();
+        if(!valid) return;
         currentStep.value = step1.value;
     }
 
@@ -25,6 +37,8 @@ export const useSignUpStore = defineStore("signup-store", () => {
         step1,
         step2,
         step3,
+        step1Input,
+        v$,
         moveStep1,
         moveStep2,
         moveStep3,

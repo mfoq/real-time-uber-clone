@@ -18,13 +18,13 @@ export const useSignUpStore = defineStore("signup-store", () => {
 
     const v$ = useVuelidate(rulesStep1Input, step1Input)
 
-    async function moveStep1(){
-        const valid = await v$.value.$validate();
-        if(!valid) return;
+    function moveStep1(){
         currentStep.value = step1.value;
     }
 
-    function moveStep2(){
+    async function moveStep2(){
+        const valid = await v$.value.$validate();
+        if(!valid) return;
         currentStep.value = step2.value;
     }
 

@@ -1,27 +1,22 @@
 <script setup>
-    import { onMounted } from 'vue';
     import { useSignUpStore } from '../../../stores/auth/signup-store';
     import { storeToRefs } from 'pinia';
-    import inputError  from '../../../components/base-components/inputError.vue';
     
     const signupStore = useSignUpStore();
 
-    const {v$, step1Input} = storeToRefs(signupStore);
+    const {vStep1$, step1Input} = storeToRefs(signupStore);
 
-    // onMounted(() => {
-    //    console.log('render step 1');
-    // })
 </script>
 
 <template>
 
-    <inputError :errors="v$.name.$errors">
+    <inputError :errors="vStep1$.name.$errors">
         <input type="text" v-model="step1Input.name" placeholder="Name" class="mb-2 border rounded-md p-2 w-[100%]">
     </inputError>
 
-    <inputError :errors="v$.email.$errors">
+    <inputError :errors="vStep1$.email.$errors">
         <input type="text" v-model="step1Input.email" placeholder="Email" class="mb-2 border rounded-md p-2 w-[100%]" />
     </inputError>
 
-    <button @click="signupStore.moveStep2" class="bg-indigo-700 text-white p-2 mb-2 rounded-md shadow-sm w-[100%] ">Next</button>
+    <button @click="signupStore.moveStep1" class="bg-indigo-700 text-white p-2 mb-2 rounded-md shadow-sm w-[100%] ">Next</button>
 </template>

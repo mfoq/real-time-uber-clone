@@ -5,13 +5,14 @@ import { router } from './src/router';
 import App from './src/App.vue';
 import { createPinia } from 'pinia';
 
-const importIcons = import.meta.glob('./src/components/icons/**/*.vue');
+//Here is some code for auto import components
+const importComponents = import.meta.glob('./src/components/**/*.vue');
 
 function registerComponents(app) {
-    for (const filePath of Object.keys(importIcons)) {
+    for (const filePath of Object.keys(importComponents)) {
         const componentName = filePath.split('/').pop().replace('.vue', '');
         
-        importIcons[filePath]().then(function(data) {
+        importComponents[filePath]().then(function(data) {
             app.component(componentName, data?.default);
         }).catch((error) =>console.log(error?.message ));
     }

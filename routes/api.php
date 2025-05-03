@@ -11,5 +11,7 @@ Route::get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
     Route::post('/users', 'register');
     Route::post('/login', 'login');
+    Route::post('/logout', 'logout');
+
     Route::post('/users/verify-email', 'validateUserEmail');
 });

@@ -3,11 +3,12 @@
     import { storeToRefs } from 'pinia';
    
     const signupStore = useSignUpStore();
-    const {vStep2$, step2Input} = storeToRefs(signupStore);
+    const {vStep2$, step2Input, loading} = storeToRefs(signupStore);
 
 </script>
 
 <template>
+    <Loading :loading="loading"/>
 
     <inputError :errors="vStep2$.password.$errors">
         <input type="password" v-model="step2Input.password" placeholder="Password" class="mb-2 border rounded-md p-2 w-[100%]">

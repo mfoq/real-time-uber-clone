@@ -3,11 +3,13 @@
     import { storeToRefs } from 'pinia';
    
     const signupStore = useSignUpStore();
-    const {vStep3$, step3Input, step1Input} = storeToRefs(signupStore);
+    const {vStep3$, step3Input, step1Input, loading} = storeToRefs(signupStore);
    
 </script>
 
 <template>
+
+        <Loading :loading="loading"/>
 
         <span>
             <a href="#" class="text-indigo-700 font-semibold">{{ step1Input.email }}</a>

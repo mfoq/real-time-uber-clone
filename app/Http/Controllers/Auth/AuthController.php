@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\SendEmailEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Events\SendEmailEvent;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-
     public function login(Request $request)
     {
         $fields = $request->all();
@@ -32,7 +32,9 @@ class AuthController extends Controller
         if(!$user || !Hash::check($fields['password'], $user->password))
         {
             return response([
-                'message' => 'Email Or password is incorrect',
+                'errors' => [
+                    'message' => 'Email or password is incorrect',
+                ],
                 'isLogged' => false,
             ], 401);
         }
@@ -81,16 +83,28 @@ class AuthController extends Controller
 
     public function validateUserEmail(Request $request)
     {
-        $email = $request->email;
-        $otpCode = $request->otp_code;
-        $user = User::getUserByEmail($email);
+        $fields = $request->all();
+        
+        $errors = Validator::make($fields, [
+            'email' =>'required|email',
+            'otp_code' =>'required',
+        ]);
+
+        #json response
+        if($errors->fails()){
+            return response([
+                'errors' => $errors->errors()->all(),
+            ], 422);
+        }
+
+        $user = User::getUserByEmail($fields['email']);
 
         if(!$user){
             return response([
                'message' => 'User not found',
                'user' => $user,
             ], 404);
-        }elseif($user->otp_code != $otpCode){
+        }elseif($user->otp_code != $fields['otp_code']){
             return response([
                 'message' => 'Invalid OTP code',
                 'user' => $user,
@@ -106,9 +120,22 @@ class AuthController extends Controller
             'is_valid_Email' => User::IS_VALID_EMAIL,
         ]);
 
+        $token = $user->createToken(env('SECRET_TOKEN_KEY'));
         return response([
             'message' => 'Email verification successful.',
             'user' => $user,
+            'token' => $token->plainTextToken,
         ], 200);
+    }
+
+    public function logout(Request $request)
+    {
+        DB::table('personal_access_tokens')
+            ->where('tokenable_id', $request->user()->id)
+            ->delete();
+
+        return response([
+            'message' => 'User logged out successfully',
+        ]);
     }
 }

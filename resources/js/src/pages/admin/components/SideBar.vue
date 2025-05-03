@@ -1,6 +1,10 @@
 <script setup>
     import { App } from '../../../api/api';
     import { ref } from 'vue';
+    import { getUserData } from '../../../helper/utils';
+    import { useLoginStore } from "../../../stores/auth/login-store";
+
+    const loginStore = useLoginStore();
 
     const toggleSideBar = ref(false);
     const topNavBarMenu = ref(false);
@@ -12,6 +16,8 @@
     function toggle() {
         toggleSideBar.value = !toggleSideBar.value;
     }
+
+    const userData = getUserData();
 
 </script>
 
@@ -44,7 +50,7 @@
                     </li>
 
                     <hr>
-                    <li class="flex gap-2 text-red-600 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
+                    <li @click="loginStore.logout" class="flex gap-2 text-red-600 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
                         <LogoutIcon class="mt-1"/>
                         <span v-show="toggleSideBar">Logout</span>
                     </li>
@@ -52,7 +58,7 @@
             </nav>
     </div>
 
-    <!-- main section -->
+    <!-- navbar right dropdpwn section -->
     <div class="bg-slate-200 w-full">
         <div class="flex justify-between">
             <div></div>
@@ -60,12 +66,14 @@
                 <img @click="toggleNavBarMenu" :src="App.baseUrl+'img/avatar.jpeg'" alt="logo" class="rounded-full w-10 cursor-pointer border-2 hover:border-white">
                 <ul v-show="topNavBarMenu" class="bg-white absolute right-4 p-3 rounded-md shadow-lg divide-y divide-gray-200 w-[300px]">
                     <li class="p-2">
-                        Mahmood subhi
+                        {{ userData?.user.name }}
                         <br>
-                        <small><a class="text-indigo-700" href="">mahmood_alfoqahaa@yahoo.com</a></small>
+                        <small><a class="text-indigo-700" href="">
+                            {{ userData?.user.email }}
+                        </a></small>
                     </li>
                     
-                    <li class="p-2 hover:bg-gray-100 rounded-md cursor-pointer text-red-600 font-semibold">
+                    <li @click="loginStore.logout" class="p-2 hover:bg-gray-100 rounded-md cursor-pointer text-red-600 font-semibold">
                         Logout
                     </li>
                 </ul>
@@ -78,6 +86,6 @@
             </p>
         </div>
     </div>
-    <!-- main section -->
+    <!-- navbar right dropdpwn section -->
 
 </template>

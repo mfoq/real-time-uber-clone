@@ -138,4 +138,13 @@ class AuthController extends Controller
             'message' => 'User logged out successfully',
         ]);
     }
+
+    public function getUsers(Request $request)
+    {
+        $data = DB::table('users')
+            ->select('id', 'name', 'email', 'role')    
+            ->paginate(20);
+
+        return response($data, 200);
+    }
 }

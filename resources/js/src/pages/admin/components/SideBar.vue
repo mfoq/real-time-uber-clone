@@ -80,11 +80,15 @@
             </div>
         </div>
 
-        <div class="flex p-10">
+        <!-- <div class="flex p-10">
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
-        </div>
+        </div> -->
+
+        <slot name="main">
+
+        </slot>
     </div>
     <!-- navbar right dropdpwn section -->
 

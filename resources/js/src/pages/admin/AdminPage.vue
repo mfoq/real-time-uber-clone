@@ -4,6 +4,10 @@
 
 <template>
     <div class="flex">
-        <SideBar />
+        <SideBar>
+            <template #main>
+                <RouterView/>
+            </template>
+        </SideBar>
     </div>
 </template>

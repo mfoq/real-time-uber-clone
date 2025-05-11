@@ -14,8 +14,15 @@ const routes = [
     {
         path: '/dashboard',
         name: 'dashboard',
-        component: () => import('../pages/admin/DashboardPage.vue'),
-    }
+        component: () => import('../pages/admin/AdminPage.vue'),
+        children: [
+            {
+                path: '/users',
+                component: () => import('../pages/admin/user/UserPage.vue'),
+            }
+        ]
+    },
+
 ]
 
 export const router = createRouter({

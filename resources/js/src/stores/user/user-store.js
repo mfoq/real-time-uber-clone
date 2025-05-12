@@ -1,29 +1,18 @@
-import { defineStore,acceptHMRUpdate } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 import { ref } from "vue";
-import { useVuelidate } from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
-import { postData } from "../../helper/http";
-import { showError, successMsg, setUserData, getUserData } from "../../helper/utils";
+import { getData, postData } from "../../helper/http";
+import { showError } from "../../helper/utils";
 
-
-export const useLoginStore = defineStore("login", () => {
+export const useUserStore = defineStore("user-store", () => {
 
     const userData = ref({});
+    const loading = ref(false);
 
-    async function logout() {
+    async function getUsers(page = 1, query = '') {
         try{
-            const userData = getUserData();
-
             loading.value = true;
-            const data = await postData('/logout',
-                    {userId: userData?.user?.id});
-
-            //redirect the user to the login page
-            localStorage.clear();
-            window.location.href = '/app/login';
-
-            //cookie
-            successMsg(data?.message);
+            const data = await getData(`/users?page=${page}&query=${query}`,);
+            userData.value = data;
 
             loading.value = false;
 
@@ -39,10 +28,12 @@ export const useLoginStore = defineStore("login", () => {
     }
 
     return {
-       
+        getUsers,
+        userData,
+        loading,
     }
 })
 
 if(import.meta.hot){
-    import.meta.hot.accept(acceptHMRUpdate(useLoginStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
 }

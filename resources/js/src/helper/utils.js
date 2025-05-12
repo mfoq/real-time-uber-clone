@@ -48,14 +48,14 @@ export function setUserData(data){
  }))
 }
 
-// export function _debounce(cb,delay){
-//   let timer
+export function _debounce(cb,delay){
+  let timer
 
-//   return function(...args){
-//     clearTimeout(timer)
-//     timer = setTimeout(()=>cb(args),delay)
-//   }
-// }
+  return function(...args){
+    clearTimeout(timer)
+    timer = setTimeout(()=>cb(args),delay)
+  }
+}
 
 // export function promptUser(message) {
 //   return new Promise((resolve, reject) => {

@@ -11,8 +11,10 @@ Route::get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
     Route::post('/users', 'register');
     Route::post('/login', 'login');
-    Route::post('/logout', 'logout');
-    Route::get('/users', 'getUsers');
-
     Route::post('/users/verify-email', 'validateUserEmail');
+
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/logout', 'logout');
+        Route::get('/users', 'getUsers');
+    });
 });

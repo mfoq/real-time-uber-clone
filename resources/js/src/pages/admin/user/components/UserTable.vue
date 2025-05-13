@@ -5,7 +5,7 @@
 
     const props = defineProps(['users']);
 
-    const emit = defineEmits(['getUsers']); //event
+    const emit = defineEmits(['getUsers', 'toggleModal']); //events
     const query = ref('');
     const page = ref(1);
 
@@ -42,7 +42,7 @@
                     </td>
                     <td class="border border-gray-300 py-2 px-4">{{ user?.role }}</td>
                     <td class="border border-gray-300 py-2 px-4">
-                        <a href="">Edit</a>
+                        <a @click="emit('toggleModal', user?.id)" class="text-indigo-700 font-bold" href="#">Edit</a>
                     </td>
                 </tr>
             </tbody>

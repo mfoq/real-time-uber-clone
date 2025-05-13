@@ -13,5 +13,5 @@
         <input type="text" v-model="step1Input.email" placeholder="Email" class="mb-2 border rounded-md p-2 w-[100%]" />
     </inputError>
 
-    <button @click="loginStore.next" class="bg-indigo-700 text-white p-2 mb-2 rounded-md shadow-sm w-[100%] ">Next</button>
+    <button @click="loginStore.next" class="bg-indigo-700 text-white p-2 mb-2 rounded-md shadow-sm w-[100%]">Next</button>
 </template>

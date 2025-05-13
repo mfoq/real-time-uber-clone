@@ -68,6 +68,7 @@ class AuthController extends Controller
             'name' => $fields['name'],
             'email' => $fields['email'],
             'otp_code' => $otpCode,
+            'role' => User::CUSTOMER_ROLE,
             'is_valid_Email' => User::IS_INVALID_EMAIL,
             'password' => bcrypt($fields['password']),
         ]);
@@ -137,6 +138,17 @@ class AuthController extends Controller
         return response([
             'message' => 'User logged out successfully',
         ]);
+    }
+
+    public function updateRole(Request $request)
+    {
+        DB::table('users')
+            ->where('id', $request->userId)
+            ->update(['role' => $request->role]);
+
+        return response([
+            'message' => 'Role updated successfully',
+        ], 200);
     }
 
     public function getUsers(Request $request)

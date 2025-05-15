@@ -9,7 +9,7 @@
 
     const userStore = useUserStore();
 
-    const {userData,modalVal, roles, loading, modifyRole} = storeToRefs(userStore);
+    const {userData,modalVal, roles, loading} = storeToRefs(userStore);
 
     onMounted(async() => {
         await userStore.getUsers();

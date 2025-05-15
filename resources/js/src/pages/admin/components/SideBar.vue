@@ -3,6 +3,7 @@
     import { ref } from 'vue';
     import { getUserData } from '../../../helper/utils';
     import { useLoginStore } from "../../../stores/auth/login-store";
+    import { RouterLink } from 'vue-router';
 
     const loginStore = useLoginStore();
 
@@ -45,10 +46,20 @@
                     </li>
 
                     <li class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
-                        <UsersIcon class="mt-1"/>
-                        <span v-show="toggleSideBar" >Users</span>
+                       <Router-link class="flex" to="users">
+                            <UsersIcon class="mt-1"/>
+                            <span v-show="toggleSideBar" class="ml-2">Users</span>
+                       </Router-link>
                     </li>
 
+                    <li class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
+                       <Router-link class="flex" to="vehicles">
+                            <TruckIcon class="mt-1"/>
+                            <span v-show="toggleSideBar" class="ml-2">Vehicles</span>
+                       </Router-link>
+                    </li>
+
+                    
                     <hr>
                     <li @click="loginStore.logout" class="flex gap-2 text-red-600 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
                         <LogoutIcon class="mt-1"/>
@@ -79,12 +90,6 @@
                 </ul>
             </div>
         </div>
-
-        <!-- <div class="flex p-10">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-        </div> -->
 
         <slot name="main">
 

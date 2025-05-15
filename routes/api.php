@@ -22,10 +22,12 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(VehicleController::class)->group(function () {
-    Route::group(['middleware' => ['auth:sanctum']], function () {
-        Route::post('/vehicels', 'store');
-        Route::post('/vehicels/image', 'addImage');
-        Route::put('/vehicels', 'update');
-        Route::delete('/vehicels', 'destroy');
-    });
+    // Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::get('/vehicles', 'getVehicles');
+        Route::post('/vehicles', 'store');
+        Route::post('/vehicles/image', 'addImage');
+        Route::put('/vehicles', 'update');
+        Route::delete('/vehicles', 'destroy');
+
+    // });
 });

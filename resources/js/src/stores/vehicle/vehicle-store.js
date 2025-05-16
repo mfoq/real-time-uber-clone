@@ -45,8 +45,7 @@ export const useVehicleStore = defineStore("vehicle-store", () => {
                 : await createVehicle();
             vehicleValidation$.value.$reset();
             edit.value = false;
-            toggleModal();
-            vehicleInput.value = {"name":"", "model":"", "price":""};
+            modalVal.value = !modalVal.value;
             getVehicles();
             successMsg(data?.message);
             loading.value = false;

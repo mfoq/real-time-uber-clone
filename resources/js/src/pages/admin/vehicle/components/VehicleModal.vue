@@ -1,14 +1,14 @@
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { ref } from 'vue';
     import { useVehicleStore } from '../../../../stores/vehicle/vehicle-store';
     import { storeToRefs } from 'pinia';
+    import { computed } from 'vue';
 
     const vehicleStore=useVehicleStore()
     const {vehicleValidation$,vehicleInput, loading, edit} = storeToRefs(vehicleStore);
     const props = defineProps(['show']);
     const emit = defineEmits(['toggleModal']);
-    const saveBtnLabel = ref(edit.value ? 'Update' : 'Save');
-    console.log(edit.value);
+    const saveBtnLabel = computed(() => edit.value ? 'Update' : 'Save');
 </script>
 
 <template>

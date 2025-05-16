@@ -37,6 +37,23 @@ export function postData(endpoint, input){
     })
 }
 
+export function putData(endpoint, input){
+    const headers = getHedaders();
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await fetch(App.apiBaseUrl + endpoint, {
+                headers: headers,
+                method: 'PUT',
+                body: JSON.stringify(input)
+            })
+            const data = await res.json()
+            handleHttpError(data, resolve, reject)
+        }catch (error) {
+            reject(error)
+        }
+    })
+}
+
 export function getData(endpoint){
     const headers = getHedaders();
     return new Promise(async(resolve, reject) => {

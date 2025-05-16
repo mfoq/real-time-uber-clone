@@ -1,12 +1,16 @@
 <script setup>
     const props = defineProps(['vehicles']);
-
-    console.log(props.vehicles);
-
-    const emit = defineEmits(['editVehicles', 'uploadImage', 'deleteVehicles']); //events
+    const emit = defineEmits(['editVehicle', 'uploadImage', 'deleteVehicle', 'toggleModal']); //events
 </script>
 
 <template>
+
+        <div class="flex justify-end p-2">
+            <button @click="emit('toggleModal')" class="text-white bg-indigo-700 p-2 border rounded-md font-semibold">
+                Create
+            </button>
+        </div>
+
         <table class="bg-white rounded-md shadow-md border border-gray-300 w-full">
             <thead>
                 <tr class="bg-gray-100 text-left">
@@ -27,10 +31,25 @@
                     <td class="border border-gray-300 py-2 px-4">
                         <img :src="vehicle?.image" alt="vehicle-image" class="w-20">
                     </td>
+                    
                     <td class="border border-gray-300 py-2 px-4">
-                        <a @click="emit('uploadImage', vehicle?.id)" class="text-indigo-700 font-bold" href="#">upload</a>
-                        <!-- <a @click="emit('toggleModal', vehicle?.id)" class="text-indigo-700 font-bold" href="#">Edit</a>
-                        <a @click="emit('toggleModal', vehicle?.id)" class="text-indigo-700 font-bold" href="#">delete</a> -->
+                        <div class="flex justify-evenly items-center">
+                            <a @click="emit('uploadImage', vehicle?.id)" 
+                                class="hover:bg-indigo-700 hover:text-white text-indigo-700 font-bold no-underline border rounded-md border-indigo-700 p-2" 
+                                href="#">
+                                <UploadIcon/>
+                            </a>
+                            
+                            <a @click="emit('editVehicle', vehicle)" 
+                                class="hover:bg-indigo-700 hover:text-white text-indigo-700 font-bold no-underline border rounded-md border-indigo-700 p-2"                                 href="#">
+                                <EditIcon/>
+                            </a>
+
+                            <a @click="emit('deleteVehicle', vehicle?.id)" 
+                                class="hover:bg-indigo-700 hover:text-white text-indigo-700 font-bold no-underline border rounded-md border-indigo-700 p-2"                                 href="#">
+                                <DeleteIcon/>
+                            </a>
+                        </div>
                     </td>
                 </tr>
             </tbody>

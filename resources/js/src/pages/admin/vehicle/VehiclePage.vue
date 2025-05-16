@@ -16,7 +16,7 @@
     function editVehicle(vehicle) {
         edit.value = true;
         vehicleInput.value = vehicle;
-        vehicleStore.toggleModal();
+        modalVal.value = !modalVal.value;
     }
 
 </script>

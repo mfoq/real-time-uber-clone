@@ -15,16 +15,19 @@ export const useVehicleStore = defineStore("vehicle-store", () => {
 
     function toggleModal(){
         modalVal.value = !modalVal.value;
+        if(edit.value){
+            edit.value = false;
+            vehicleInput.value = {};
+        }
     }
 
     async function editVehicle(){
-        await putData(`/vehicles`,{...vehicleInput.value});
+        return await putData(`/vehicles`,{...vehicleInput.value});
     }
 
     async function createVehicle()
     {
-        await postData(`/vehicles`,{...vehicleInput.value});
-        vehicleInput.value = {"name":"", "model":"", "price":""};
+        return await postData(`/vehicles`,{...vehicleInput.value});
     }
 
     const rules = {
@@ -45,8 +48,8 @@ export const useVehicleStore = defineStore("vehicle-store", () => {
                 : await createVehicle();
             vehicleValidation$.value.$reset();
             edit.value = false;
-            modalVal.value = !modalVal.value;
-            getVehicles();
+            toggleModal();
+            vehicleInput.value = {"name":"", "model":"", "price":""};
             successMsg(data?.message);
             loading.value = false;
         }catch(error){

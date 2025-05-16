@@ -2,7 +2,7 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 import { ref } from "vue";
 import { useVuelidate } from '@vuelidate/core'
 import { required, numeric } from '@vuelidate/validators'
-import { getData, postData, putData } from "../../helper/http";
+import { getData, postData, putData, deleteData } from "../../helper/http";
 import { showError, successMsg } from "../../helper/utils";
 
 export const useVehicleStore = defineStore("vehicle-store", () => {
@@ -61,6 +61,21 @@ export const useVehicleStore = defineStore("vehicle-store", () => {
         }
     }
 
+    async function deleteVehicle(id){
+        try{
+            loading.value = true;
+            const data = await deleteData(`/vehicles`,{id:id});
+            console.log(data);
+            successMsg(data?.message);
+            loading.value = false;
+        }catch(error){
+            loading.value = false;
+            for(const message of error){
+                showError(message)
+            }
+        }
+    }
+
     async function getVehicles() {
         try{
             loading.value = true;
@@ -78,6 +93,7 @@ export const useVehicleStore = defineStore("vehicle-store", () => {
 
     return {
         createOrUpdateVehicle,
+        deleteVehicle,
         modalVal,
         toggleModal,
         getVehicles,

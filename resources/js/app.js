@@ -9,6 +9,11 @@ import { createPinia } from 'pinia';
 import ToastPlugin from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 
+//sweet alert
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+
 //Here is some code for auto import components
 const importComponents = import.meta.glob('./src/components/**/*.vue');
 
@@ -28,5 +33,7 @@ const pinia = createPinia();
 app.use(router);
 app.use(pinia);
 app.use(ToastPlugin);
+app.use(VueSweetalert2);
+
 registerComponents(app);
 app.mount('#app');

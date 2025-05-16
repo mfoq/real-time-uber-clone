@@ -131,6 +131,6 @@ class VehicleController extends Controller
 
         return response([
             'message' => 'Vehicle delete successfully',
-        ], 204);
+        ], 200);
     }
 }

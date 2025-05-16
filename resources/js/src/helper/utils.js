@@ -1,7 +1,6 @@
 import {useToast} from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
-
-// import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 const toast = useToast()
 
@@ -57,42 +56,42 @@ export function _debounce(cb,delay){
   }
 }
 
-// export function promptUser(message) {
-//   return new Promise((resolve, reject) => {
-//     Swal.fire({
-//       title: 'Are you sure?',
-//       text: message,
-//       icon: 'warning',
-//       showCancelButton: true,
-//       confirmButtonColor: '#3085d6',
-//       cancelButtonColor: '#d33',
-//       confirmButtonText: 'Confirm'
-//     })
-//     .then((result) => {
-//       if (result.isConfirmed) {
-//         resolve(result.isConfirmed)
-//       }
-//       reject()
-//     })
-//   })
-// }
+export function promptUser(message) {
+  return new Promise((resolve, reject) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: message,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        resolve(result.isConfirmed)
+      }
+      reject()
+    })
+  })
+}
 
-// export function confirmDelation(message) {
-//   return new Promise((resolve, reject) => {
-//     Swal.fire({
-//       title: 'Are you sure?',
-//       text: typeof message === undefined ? 'do you want to delete this ' : message,
-//       icon: 'warning',
-//       showCancelButton: true,
-//       confirmButtonColor: '#3085d6',
-//       cancelButtonColor: '#d33',
-//       confirmButtonText: 'Confirm'
-//     })
-//     .then((result) => {
-//       if (result.isConfirmed) {
-//         resolve(result.isConfirmed)
-//       }
-//       reject()
-//     })
-//   })
-// }
+export function confirmDelation(message) {
+  return new Promise((resolve, reject) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: typeof message === undefined ? 'do you want to delete this ' : message,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        resolve(result.isConfirmed)
+      }
+      reject()
+    })
+  })
+}

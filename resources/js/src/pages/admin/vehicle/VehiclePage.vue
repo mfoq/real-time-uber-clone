@@ -50,6 +50,8 @@
             @toggleModal="vehicleStore.toggleModal"
             @uploadImage="uploadImage"
             />
-        <UploadImageModal :show="uploadImageVehicleModal"/>
+        <UploadImageModal 
+            :show="uploadImageVehicleModal"
+            @getVehicles="vehicleStore.getVehicles()"/>
     </div>
 </template>

@@ -21,22 +21,38 @@ import { showError } from '../../../../helper/utils';
     const props = defineProps(['show']);
     const emit = defineEmits(['getVehicles']);
 
-   async function uploadImage() {
-        const payload = await uploadVehicleImageStore.uploadVehicleImage();
-        loading.value = true;
-        fetch(App.apiBaseUrl + "/vehicles/image", payload)
-            .then((response) => response.json())
-            .then(async (result) => {
-                document.querySelector('#outputImage').src ='';
-                loading.value = false;
-                modalVal.value = false;
-                await emit('getVehicles')
-            })
-            .catch((error) => {
-                showError(error?.message);
-                loading.value = false;
-            });
+    async function uploadImage() {
+        try {
+            const payload = await uploadVehicleImageStore.uploadVehicleImage();
+            loading.value = true;
+
+            const response = await fetch(App.apiBaseUrl + "/vehicles/image", payload);
+
+            // Check if the response is not ok
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw errorData;
+            }
+
+            const result = await response.json();
+            document.querySelector('#outputImage').src = '';
+            document.querySelector('#imageInput').value = '';
+            loading.value = false;
+            modalVal.value = false;
+            await emit('getVehicles');
+        } catch (error) {
+            console.error(error);
+            if (error.errors) {
+                for (const message of Object.values(error.errors)) {
+                    showError(message);
+                }
+            } else {
+                showError('An unexpected error occurred');
+            }
+            loading.value = false;
+        }
     }
+
     
 </script>
 
@@ -48,7 +64,7 @@ import { showError } from '../../../../helper/utils';
         <template #body>
             <img style="height:150px;" alt="image" id="outputImage">
             <label for="name">Select image:</label>
-            <input type="file" @change="selectImage" class="mb-2 border rounded-md p-2 w-[100%]">
+            <input type="file" id="imageInput" @change="selectImage" class="mb-2 border rounded-md p-2 w-[100%]">
         </template>
         <template #footer>
             <button @click="modalVal=false" class="border border-indigo-700 text-gray-700 p-2 mb-2 rounded-md shadow-sm">Close</button>

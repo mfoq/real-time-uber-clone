@@ -54,7 +54,6 @@ export const useVehicleStore = defineStore("vehicle-store", () => {
             loading.value = false;
         }catch(error){
             loading.value = false;
-            console.log(error);
             for(const message of error){
                 showError(message)
             }

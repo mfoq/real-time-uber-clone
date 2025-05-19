@@ -48,7 +48,7 @@ import { ADMIN_ROLE } from '../../../constants/roles';
                     </Router-link>
 
                     
-                    <Router-link v-show="userData?.role === ADMIN_ROLE" class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer" to="users">
+                    <Router-link v-show="userData?.user?.role === ADMIN_ROLE" class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer" to="users">
                         <UsersIcon class="mt-1"/>
                         <span v-show="toggleSideBar" class="ml-2">Users</span>
                     </Router-link>

@@ -4,6 +4,7 @@
     import { getUserData } from '../../../helper/utils';
     import { useLoginStore } from "../../../stores/auth/login-store";
     import { RouterLink } from 'vue-router';
+import { ADMIN_ROLE } from '../../../constants/roles';
 
     const loginStore = useLoginStore();
 
@@ -36,31 +37,29 @@
                     </button>
                 </div>
                 <ul class="flex flex-col gap-2 p-2">
-                    <li class="flex gap-2 bg-slate-200 p-2 rounded-md cursor-pointer">
+                    <Router-link class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer" to="welcome">
                         <HomeIcon class="mt-1"/>
-                        <span v-show="toggleSideBar">Home</span>
-                    </li>
-                    <li class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
+                        <span v-show="toggleSideBar" class="ml-2">Home</span>
+                    </Router-link>
+
+                    <Router-link class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer" to="">
                         <PaymentIcon class="mt-1"/>
-                        <span v-show="toggleSideBar" >Payments</span>
-                    </li>
-
-                    <li class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
-                       <Router-link class="flex" to="users">
-                            <UsersIcon class="mt-1"/>
-                            <span v-show="toggleSideBar" class="ml-2">Users</span>
-                       </Router-link>
-                    </li>
-
-                    <li class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
-                       <Router-link class="flex" to="vehicles">
-                            <TruckIcon class="mt-1"/>
-                            <span v-show="toggleSideBar" class="ml-2">Vehicles</span>
-                       </Router-link>
-                    </li>
+                        <span v-show="toggleSideBar" class="ml-2">Payments</span>
+                    </Router-link>
 
                     
+                    <Router-link v-show="userData?.role === ADMIN_ROLE" class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer" to="users">
+                        <UsersIcon class="mt-1"/>
+                        <span v-show="toggleSideBar" class="ml-2">Users</span>
+                    </Router-link>
+
+                    <Router-link class="flex gap-2 hover:bg-slate-200 p-2 rounded-md cursor-pointer" to="vehicles">
+                        <TruckIcon class="mt-1"/>
+                        <span v-show="toggleSideBar" class="ml-2">Vehicles</span>
+                    </Router-link>
+                    
                     <hr>
+
                     <li @click="loginStore.logout" class="flex gap-2 text-red-600 hover:bg-slate-200 p-2 rounded-md cursor-pointer">
                         <LogoutIcon class="mt-1"/>
                         <span v-show="toggleSideBar">Logout</span>
@@ -77,7 +76,7 @@
                 <img @click="toggleNavBarMenu" :src="App.baseUrl+'img/avatar.jpeg'" alt="logo" class="rounded-full w-10 cursor-pointer border-2 hover:border-white">
                 <ul v-show="topNavBarMenu" class="bg-white absolute right-4 p-3 rounded-md shadow-lg divide-y divide-gray-200 w-[300px]">
                     <li class="p-2">
-                        {{ userData?.user.name }}
+                        {{ userData?.user.name }} ({{ userData?.user.role }})
                         <br>
                         <small><a class="text-indigo-700" href="">
                             {{ userData?.user.email }}
